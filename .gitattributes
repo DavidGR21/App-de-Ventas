@@ -1,0 +1,6 @@
+* text=auto
+*.java text eol=crlf
+*.form text eol=crlf
+*.png binary
+*.jpg binary
+*.gif binary

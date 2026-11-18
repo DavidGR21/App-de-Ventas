@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Conexion {
 
     private String user, clave;
-    private static final String url = "jdbc:mysql://localhost:3306/proyecto";
+    private static final String url = config("DB_URL", "jdbc:mysql://localhost:3306/proyecto");
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static Connection con;
     private PreparedStatement ps;
@@ -62,10 +62,32 @@ public class Conexion {
         this.clave = clave;
     }
 
+    /** Lee la variable de entorno o, si no existe, el archivo .env del directorio de trabajo. */
+    private static String config(String clave, String porDefecto) {
+        String valor = System.getenv(clave);
+        if (valor != null) {
+            return valor;
+        }
+        java.io.File env = new java.io.File(".env");
+        if (env.exists()) {
+            try {
+                for (String linea : java.nio.file.Files.readAllLines(env.toPath())) {
+                    linea = linea.trim();
+                    if (linea.startsWith(clave + "=")) {
+                        return linea.substring(clave.length() + 1).trim();
+                    }
+                }
+            } catch (java.io.IOException e) {
+                System.out.println("No se pudo leer .env");
+            }
+        }
+        return porDefecto;
+    }
+
     public void Conectar() {
         con = null;
-        setUser("root");
-        setClave("davidgiler21");
+        setUser(config("DB_USER", "root"));
+        setClave(config("DB_PASSWORD", ""));
         try {
             Class.forName(driver);
             DriverManager.setLoginTimeout(2);

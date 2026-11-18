@@ -1,0 +1,40 @@
+# Compilados
+*.class
+build/
+dist/
+out/
+target/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+nbdist/
+.nb-gradle/
+
+# IntelliJ / Eclipse / VS Code
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+
+# Librerías y paquetes (descargar aparte)
+*.jar
+*.war
+*.ear
+
+# Configuración local / secretos
+.env
+*.local.properties
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Librerias descargadas por run.ps1
+lib/
